@@ -86,4 +86,20 @@ router.post('/', (req, res, next) => {
 
 });
 
+//Get movies between start and end year.
+
+router.get('/between/:start_year/:end_year', (req, res) => {
+  const { start_year, end_year } = req.params;
+  const promise = Movie.find(
+    {
+      year: { "$gte": parseInt(start_year), "$lte": parseInt(end_year)}
+    }
+  );
+  promise.then((data) => {
+    res.json(data);
+  }).catch((err) =>{
+    res.json(err);
+  })
+});
+
 module.exports = router;
